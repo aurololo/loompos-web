@@ -48,19 +48,8 @@ export function Orders() {
           </div>
         </div>
 
-        <div className="card" style={{ overflow: 'hidden' }}>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: '140px 80px 1fr 120px 100px 140px 100px',
-            padding: '12px 18px',
-            background: 'var(--surface-2)',
-            borderBottom: '1px solid var(--hairline)',
-            fontSize: 10,
-            letterSpacing: '0.16em',
-            textTransform: 'uppercase',
-            color: 'var(--text-quiet)',
-            fontWeight: 600,
-          }}>
+        <div className="card orders-table-scroll">
+          <div className="orders-row header">
             <div>Order</div>
             <div>Table</div>
             <div>Server</div>
@@ -70,14 +59,7 @@ export function Orders() {
             <div className="text-right">Total</div>
           </div>
           {ORDERS.map((o) => (
-            <div key={o.id} style={{
-              display: 'grid',
-              gridTemplateColumns: '140px 80px 1fr 120px 100px 140px 100px',
-              padding: '14px 18px',
-              borderBottom: '1px solid var(--hairline)',
-              alignItems: 'center',
-              fontSize: 14,
-            }}>
+            <div key={o.id} className="orders-row">
               <div className="mono">{o.id}</div>
               <div style={{ fontWeight: 600 }}>{o.table}</div>
               <div>{o.server}</div>

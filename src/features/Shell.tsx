@@ -52,13 +52,14 @@ interface RailProps {
   onChange: (p: PageId) => void;
   employee: Employee;
   onSwitchEmployee: () => void;
+  open?: boolean;
 }
 
-export function Rail({ active, onChange, employee, onSwitchEmployee }: RailProps) {
+export function Rail({ active, onChange, employee, onSwitchEmployee, open }: RailProps) {
   const role = ROLES[employee.role];
   const access = role?.access ?? [];
   return (
-    <div className="rail">
+    <div className={'rail' + (open ? ' open' : '')}>
       <div className="rail-brand">
         <div className="mark"><LoomMark size={30} /></div>
         <div className="word">LoomPOS</div>
@@ -158,9 +159,10 @@ interface TopBarProps {
   title: string;
   crumb: string;
   right?: ReactNode;
+  onMenu?: () => void;
 }
 
-export function TopBar({ title, crumb, right }: TopBarProps) {
+export function TopBar({ title, crumb, right, onMenu }: TopBarProps) {
   const [now, setNow] = useState(() => fmtTime(new Date()));
   useEffect(() => {
     const t = setInterval(() => setNow(fmtTime(new Date())), 30_000);
@@ -168,6 +170,11 @@ export function TopBar({ title, crumb, right }: TopBarProps) {
   }, []);
   return (
     <div className="topbar">
+      {onMenu && (
+        <button className="menu-toggle" onClick={onMenu} aria-label="Open menu">
+          <Icon.Menu style={{ width: 18, height: 18 }} />
+        </button>
+      )}
       <div className="col">
         <div className="crumb">{crumb}</div>
         <h1>{title}</h1>

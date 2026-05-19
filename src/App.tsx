@@ -38,6 +38,7 @@ export default function App() {
   });
   const [active, setActive] = useState<PageId>(() => firstAccessible(employee.role));
   const [pickerOpen, setPickerOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const access = ROLES[employee.role]?.access ?? [];
 
@@ -62,12 +63,21 @@ export default function App() {
         <div className="warp-top live" style={{ background: accent }} />
         <Rail
           active={active}
-          onChange={setActive}
+          onChange={(p) => { setActive(p); setMenuOpen(false); }}
           employee={employee}
           onSwitchEmployee={() => setPickerOpen(true)}
+          open={menuOpen}
+        />
+        <div
+          className={'rail-backdrop' + (menuOpen ? ' open' : '')}
+          onClick={() => setMenuOpen(false)}
         />
         <div className="main">
-          <TopBar title={meta.title} crumb={meta.crumb} />
+          <TopBar
+            title={meta.title}
+            crumb={meta.crumb}
+            onMenu={() => setMenuOpen(true)}
+          />
           {active === 'floor'     && <FloorMap />}
           {active === 'kds'       && <KDS />}
           {active === 'inventory' && <Inventory />}

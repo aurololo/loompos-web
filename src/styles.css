@@ -1077,3 +1077,200 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   background: var(--text-quiet);
   transform: translateX(-1px);
 }
+
+/* ====== Orders table ====== */
+.orders-table-scroll { overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; }
+.orders-row {
+  display: grid;
+  grid-template-columns: 140px 80px 1fr 120px 100px 140px 100px;
+  min-width: 780px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--hairline);
+  align-items: center;
+  font-size: 14px;
+}
+.orders-row.header {
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--hairline);
+  padding: 12px 18px;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-quiet);
+  font-weight: 600;
+}
+.orders-row:last-child { border-bottom: none; }
+
+/* ====== Mobile menu toggle (hamburger) ====== */
+.menu-toggle { display: none; }
+.rail-backdrop { display: none; }
+
+/* ====== Responsive: Tablet (≤1024px) ====== */
+@media (max-width: 1024px) {
+  .app { grid-template-columns: 200px 1fr; }
+  .band { padding: 22px 22px; }
+  .topbar { padding: 12px 18px; }
+  .floor-wrap { padding: 16px 22px 22px; }
+  .billing-wrap { padding: 20px 22px; }
+  .inv-group { padding: 18px 22px; }
+  .kds-wrap { padding: 18px 22px; }
+  .kpi-grid { grid-template-columns: 1fr 1fr; }
+  .station-load { grid-template-columns: repeat(3, 1fr); }
+  .inv-stats { grid-template-columns: repeat(3, 1fr); }
+  .floor-grid { grid-template-columns: 1fr; }
+  .floor-side { max-height: none; }
+  .billing-wrap { grid-template-columns: 1fr; }
+  .kpi .value { font-size: 44px; }
+  .kpi .value.hero { font-size: 60px; }
+  .t-hero { font-size: 56px; }
+  .t-xl { font-size: 40px; }
+  .t-lg { font-size: 32px; }
+}
+
+/* ====== Responsive: Mobile (≤768px) ====== */
+@media (max-width: 768px) {
+  /* Rail becomes a drawer */
+  .app { grid-template-columns: 1fr; }
+  .rail {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: 84%;
+    max-width: 320px;
+    z-index: 200;
+    transform: translateX(-100%);
+    transition: transform 240ms ease;
+    box-shadow: 0 0 40px rgba(0,0,0,0.5);
+  }
+  .rail.open { transform: translateX(0); }
+  .rail { overflow-y: auto; }
+  .rail-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(2px);
+    z-index: 150;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 200ms ease;
+  }
+  .rail-backdrop.open { opacity: 1; pointer-events: auto; }
+  .menu-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px; height: 38px;
+    border-radius: 8px;
+    border: 1px solid var(--hairline);
+    background: var(--surface-1);
+    color: var(--text);
+    flex-shrink: 0;
+  }
+
+  /* Topbar tightening */
+  .topbar { padding: 10px 14px; gap: 10px; }
+  .topbar h1 { font-size: 17px; }
+  .topbar .crumb { font-size: 9.5px; letter-spacing: 0.14em; }
+  .topbar .live-badge { display: none; }
+  .topbar .icon-btn { width: 32px; height: 32px; }
+
+  /* Bands & content */
+  .band { padding: 18px 14px; }
+  .band-row { flex-direction: column; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+  .band-row h2 { font-size: 20px; }
+  .band-row .actions { flex-wrap: wrap; }
+
+  /* Type scale */
+  .t-hero { font-size: 44px; }
+  .t-xl { font-size: 32px; }
+  .t-lg { font-size: 26px; }
+  .t-md { font-size: 22px; }
+
+  /* KPI cards */
+  .kpi-grid { grid-template-columns: 1fr; gap: 10px; }
+  .kpi .value { font-size: 36px; }
+  .kpi .value.hero { font-size: 44px; }
+  .hero-card { border-radius: 14px; }
+
+  /* Station / inventory stats */
+  .station-load { grid-template-columns: repeat(2, 1fr); }
+  .inv-stats { grid-template-columns: repeat(2, 1fr); }
+
+  /* Floor map */
+  .floor-wrap { padding: 12px 14px 22px; }
+  .floor-header { gap: 10px; padding: 12px 0; }
+  .floor-canvas { aspect-ratio: 4 / 3; min-height: 260px; max-height: none; }
+  .legend { margin-left: 0; flex-wrap: wrap; width: 100%; }
+  .floor-stats { grid-template-columns: repeat(3, 1fr); }
+  .td-num { font-size: 44px; }
+
+  /* KDS */
+  .kds-wrap { padding: 14px 14px; }
+  .kds-grid { grid-template-columns: 1fr; gap: 10px; }
+  .station-chip { min-width: 130px; }
+
+  /* Billing */
+  .billing-wrap {
+    padding: 16px 14px;
+    gap: 14px;
+    overflow-y: visible;
+    flex: none;
+    min-height: 0;
+  }
+  .receipt {
+    padding: 18px;
+    border-radius: 12px;
+    display: block;
+  }
+  .receipt-head .row { flex-wrap: wrap; gap: 14px; }
+  .receipt-head .row > div { min-width: 0; }
+  .receipt-rows { overflow-y: visible; flex: none; }
+  .pay-pad { display: flex; flex-direction: column; gap: 12px; }
+  .pay-methods { grid-template-columns: 1fr 1fr; }
+  .pay-method { padding: 14px; }
+  .settle-btn { padding: 18px; font-size: 15px; }
+  .settle-btn .amt { font-size: 22px; }
+
+  /* Inventory */
+  .inv-group { padding: 16px 14px; }
+  .inv-table { background: transparent; border: none; }
+  .inv-row {
+    grid-template-columns: 1fr auto;
+    gap: 6px 12px;
+    padding: 12px 14px;
+    background: var(--surface-1);
+    border: 1px solid var(--hairline);
+    border-radius: 10px;
+    margin-bottom: 8px;
+  }
+  .inv-row.inv-header { display: none; }
+
+  /* Event rows */
+  .event-row { grid-template-columns: 60px 1fr; gap: 8px; padding: 10px 12px; }
+  .event-row .src { display: none; }
+
+  /* Employee picker */
+  .emp-overlay { padding: 12px; }
+  .emp-grid { grid-template-columns: 1fr; padding: 14px; gap: 6px; }
+  .emp-head { padding: 18px 18px 14px; }
+  .emp-foot { padding: 14px 18px 18px; }
+
+  /* Insight card */
+  .insight { flex-direction: column; align-items: flex-start; gap: 12px; padding: 14px; }
+  .insight .btn { width: 100%; justify-content: center; }
+}
+
+/* ====== Responsive: Small Mobile (≤480px) ====== */
+@media (max-width: 480px) {
+  .topbar { padding: 9px 12px; }
+  .topbar h1 { font-size: 16px; }
+  .band { padding: 16px 12px; }
+  .kpi { padding: 16px 18px; }
+  .t-hero { font-size: 36px; }
+  .t-xl { font-size: 28px; }
+  .station-load { grid-template-columns: 1fr 1fr; }
+  .inv-stats { grid-template-columns: 1fr 1fr; }
+  .floor-stats { grid-template-columns: 1fr 1fr 1fr; }
+  .pay-methods { grid-template-columns: 1fr; }
+  .ticket-timer { font-size: 22px; }
+}
